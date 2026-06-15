@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Design-Tokens — dunkle Anzeigetafel-Aesthetik
+   Grund: tiefes Gruen-Schwarz · Bernstein nur fuer Live/Punkte · Teal fuer
+   "getippt/gesperrt". Display schmal+kraeftig (Archivo 800), Body Hanken
+   Grotesk, Ergebnisse Monospace (Scoreboard).
+   ============================================================================ */
+@theme {
+  --color-bg: #03100a;
+  --color-panel: #081d13;
+  --color-panel-2: #0c2719;
+  --color-panel-3: #103021;
+  --color-line: #1a4530;
+  --color-line-soft: #123322;
+
+  --color-ink: #e8f2ea;
+  --color-ink-dim: #8aa597;
+  --color-ink-faint: #5d7768;
+
+  /* Bernstein — Live / Punkte */
+  --color-ember: #f5b43c;
+  --color-ember-bright: #ffc857;
+  --color-ember-soft: #2a2410;
+
+  /* Teal — getippt / gesperrt */
+  --color-lagoon: #2dd4bf;
+  --color-lagoon-dim: #189d8e;
+  --color-lagoon-soft: #0a2b29;
+
+  --color-danger: #f4796b;
+  --color-danger-soft: #2c1512;
+
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    background-image: radial-gradient(
+      900px 480px at 50% -160px,
+      color-mix(in oklab, var(--color-lagoon) 13%, transparent),
+      transparent 72%
+    );
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-feature-settings: "tnum" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Sichtbarer Fokus ueberall */
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Zahlenfelder ohne Spinner-Pfeile (Scoreboard-Optik) */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+/* prefers-reduced-motion respektieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .scoreboard {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+}
