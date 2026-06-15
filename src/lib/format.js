@@ -35,6 +35,19 @@ export function formatTime(iso) {
   return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
 }
 
+// "Heute" / "Morgen" / "Gestern" / "Sa, 18. Juni"
+export function formatDayLabel(iso) {
+  const d = parseKickoff(iso);
+  if (!d) return "Termin offen";
+  const now = new Date();
+  const startOf = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((startOf(d) - startOf(now)) / 86400000);
+  if (diff === 0) return "Heute";
+  if (diff === 1) return "Morgen";
+  if (diff === -1) return "Gestern";
+  return `${WEEKDAY[d.getDay()]}, ${d.getDate()}. ${MONTH[d.getMonth()]}`;
+}
+
 // Sortierschluessel: Spiele ohne Termin ans Ende.
 export function kickoffSortValue(iso) {
   const d = parseKickoff(iso);

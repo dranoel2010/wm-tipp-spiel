@@ -1,44 +1,42 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   Design-Tokens — dunkle Anzeigetafel-Aesthetik
-   Grund: tiefes Gruen-Schwarz · Bernstein nur fuer Live/Punkte · Teal fuer
-   "getippt/gesperrt". Display schmal+kraeftig (Archivo 800), Body Hanken
-   Grotesk, Ergebnisse Monospace (Scoreboard).
+   Design-Tokens — 1:1 aus dem Mockup (UI/).
+   Helles Hellgrau, weiße Cards mit weichem Schatten, royal-blaues Primary,
+   Inter-Typografie. Akzente: Grün (Zuwachs), Gold (Platz 1), Orange (Platz 3).
    ============================================================================ */
 @theme {
-  --color-bg: #03100a;
-  --color-panel: #081d13;
-  --color-panel-2: #0c2719;
-  --color-panel-3: #103021;
-  --color-line: #1a4530;
-  --color-line-soft: #123322;
+  --color-bg: #f4f6fa;
+  --color-card: #ffffff;
 
-  --color-ink: #e8f2ea;
-  --color-ink-dim: #8aa597;
-  --color-ink-faint: #5d7768;
+  --color-primary: #105bfd;
+  --color-primary-600: #0a4ee0;
+  --color-primary-50: #eaf1ff;
+  --color-primary-100: #d9e6ff;
 
-  /* Bernstein — Live / Punkte */
-  --color-ember: #f5b43c;
-  --color-ember-bright: #ffc857;
-  --color-ember-soft: #2a2410;
+  --color-ink: #0f1729;
+  --color-ink-2: #39425a;
+  --color-muted: #8b93a5;
+  --color-faint: #aab2c0;
 
-  /* Teal — getippt / gesperrt */
-  --color-lagoon: #2dd4bf;
-  --color-lagoon-dim: #189d8e;
-  --color-lagoon-soft: #0a2b29;
+  --color-line: #eceef3;
+  --color-line-2: #f3f5f9;
 
-  --color-danger: #f4796b;
-  --color-danger-soft: #2c1512;
+  --color-green: #0e9f52;
+  --color-green-50: #e6f7ee;
+  --color-gold: #f7b500;
+  --color-rank2: #9aa2b1;
+  --color-rank3: #f2994a;
 
-  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+  --color-danger: #e5484d;
+  --color-danger-50: #fdeced;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html {
@@ -50,27 +48,20 @@
     margin: 0;
     min-height: 100dvh;
     background-color: var(--color-bg);
-    background-image: radial-gradient(
-      900px 480px at 50% -160px,
-      color-mix(in oklab, var(--color-lagoon) 13%, transparent),
-      transparent 72%
-    );
-    background-attachment: fixed;
     color: var(--color-ink);
-    font-family: var(--font-body);
-    font-feature-settings: "tnum" 1;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* Sichtbarer Fokus ueberall */
   :focus-visible {
-    outline: 2px solid var(--color-ember);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
-  /* Zahlenfelder ohne Spinner-Pfeile (Scoreboard-Optik) */
+  /* Zahlenfelder ohne Spinner */
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -82,7 +73,6 @@
   }
 }
 
-/* prefers-reduced-motion respektieren */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -95,9 +85,16 @@
 }
 
 @layer utilities {
-  .scoreboard {
-    font-family: var(--font-mono);
+  .tnum {
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
+  }
+  /* Weicher Card-Schatten wie im Mockup */
+  .card-shadow {
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.04),
+      0 6px 20px rgba(16, 24, 40, 0.05);
+  }
+  .card-shadow-sm {
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.07);
   }
 }
